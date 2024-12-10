@@ -97,3 +97,17 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+
+
+##DOCKER
+
+#For Dev
+- To create image : ``` $docker build -t restaurant-api-nestjs . ```
+- To run container: ``` $docker run -p 3000:3000 restaurant-api-nestjs ```
+- To run compose: ``` $docker-compose up --build --f docker-compose.yml -d```
+
+#For Prod
+- To create image : ``` $docker build -t restaurant-api-nestjs-prod -f Dockerfile.prod .```
+- To run container: ``` $docker run -p 3001:3001 restaurant-api-nestjs-prod ```
+- To run compose: ``` $-f docker-compose.prod.yml up --build -d```
+
