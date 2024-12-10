@@ -8,6 +8,10 @@ services:
     environment:
       - PORT=3000
       - NODE_ENV=dev
+      - MONGO_URI=mongodb://database:27017
+      - MONGO_NAME=restaurants
+      - MONGO_USER=admin
+      - MONGO_PASSWORD=1234
     volumes:
       - ./src:/usr/src/app/src
 
