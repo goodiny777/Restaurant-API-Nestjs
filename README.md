@@ -104,7 +104,7 @@ Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
 #For Dev
 - To create image : ``` $docker build -t restaurant-api-nestjs . ```
 - To run container: ``` $docker run -p 3000:3000 restaurant-api-nestjs ```
-- To run compose: ``` $docker-compose up --build --f docker-compose.yml -d```
+- To run compose: ``` $docker-compose up --build```
 
 #For Prod
 - To create image : ``` $docker build -t restaurant-api-nestjs-prod -f Dockerfile.prod .```

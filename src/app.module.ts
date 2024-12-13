@@ -7,13 +7,8 @@ import { ConfigModule } from '@nestjs/config';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    MongooseModule.forRoot(process.env.MONGO_URI, {
-      dbName: process.env.MONGO_NAME,
-      auth: {
-        username: process.env.MONGO_USER,
-        password: process.env.MONGO_PASS,
-      },
-    }),],
+    MongooseModule.forRoot(process.env.MONGO_URI),
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
