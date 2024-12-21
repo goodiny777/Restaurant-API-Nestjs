@@ -3,9 +3,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.prod
-    ports: -'3001:3001'
+    ports: -'${PORT}:${PORT}'
     environment:
-      - PORT=3001
-      - NODE_ENV=prod
+      - PORT=${PORT}
+      - NODE_ENV=${NODE_ENV}
     volumes:
       - ./src:/usr/src/app/src

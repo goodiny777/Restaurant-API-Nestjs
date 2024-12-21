@@ -1,4 +1,4 @@
-import { IsEmail, IsEnum, IsOptional, IsPhoneNumber, IsString } from "class-validator/types/decorator/decorators";
+import { IsEmail, IsEnum, IsOptional, IsPhoneNumber, IsString } from "class-validator";
 import { Category } from "../schemas/restaurant.schema";
 
 export class UpdateRestaurantDTO {

@@ -6,20 +6,30 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - '3001:3001'
+      - '${PORT}:${PORT}'
     environment:
-      - PORT=3001
-      - NODE_ENV=dev
-      - MONGO_URI=mongodb://admin:1234@database:27017/restaurants
-      - MONGO_NAME=restaurants
-      - MONGO_USER=admin
-      - MONGO_PASSWORD=1234
+      - PORT=${PORT}
+      - NODE_ENV=${NODE_ENV}
+      - MONGO_URI=${MONGO_URI}
+      - MONGO_NAME=${MONGO_NAME}
+      - MONGO_USER=${MONGO_USER}
+      - MONGO_PASSWORD=${MONGO_PASSWORD}
     volumes:
       - ./src:/usr/src/app/src
+    networks:
+      - app_network
 
   mongo:
     image: mongo
     restart: always
+    ports:
+      - "27017:27017"
     environment:
-      MONGO_USER: root
-      MONGO_PASSWORD: 12345
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge
