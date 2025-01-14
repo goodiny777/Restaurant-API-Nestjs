@@ -5,6 +5,8 @@ import { Restaurant } from './schemas/restaurant.schema';
 import { CreateRestaurantDTO } from './dto/create-restaurant.dto.';
 import { UpdateRestaurantDTO } from './dto/update-restaurant.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { CurrentUser } from '../auth/decorators/current-user.decorator';
+import { User } from '../auth/schema/user.schema';
 
 @Controller('restaurants')
 export class RestaurantsController {
@@ -14,14 +16,20 @@ export class RestaurantsController {
     }
 
     @Get()
-    @UseGuards(AuthGuard())
-    async getAllRestaurants(@Query() query: ExpressQuery): Promise<Restaurant[]> {
+
+    async getAllRestaurants(
+        @Query() query: ExpressQuery
+    ): Promise<Restaurant[]> {
         return this.restaurantsService.findAll(query);
     }
 
     @Post()
-    async addRestaurant(@Body() restaurant: CreateRestaurantDTO): Promise<Restaurant> {
-        return this.restaurantsService.create(restaurant);
+    @UseGuards(AuthGuard())
+    async addRestaurant(
+        @Body() restaurant: CreateRestaurantDTO,
+        @CurrentUser() user: User
+    ): Promise<Restaurant> {
+        return this.restaurantsService.create(restaurant, user);
     }
 
     @Get(':id')

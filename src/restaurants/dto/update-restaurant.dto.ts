@@ -1,5 +1,6 @@
-import { IsEmail, IsEnum, IsOptional, IsPhoneNumber, IsString } from "class-validator";
+import { IsEmail, IsEmpty, IsEnum, IsOptional, IsPhoneNumber, IsString } from "class-validator";
 import { Category } from "../schemas/restaurant.schema";
+import { User } from "../../auth/schema/user.schema";
 
 export class UpdateRestaurantDTO {
     @IsString()
@@ -20,4 +21,6 @@ export class UpdateRestaurantDTO {
     @IsEnum(Category, { message: 'Please input correct Category' })
     @IsOptional()
     readonly category: Category;
+    @IsEmpty({ message: 'You cannot provice user ID.' })
+    readonly user: User;
 }
