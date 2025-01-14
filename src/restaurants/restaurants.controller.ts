@@ -7,6 +7,8 @@ import { UpdateRestaurantDTO } from './dto/update-restaurant.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { CurrentUser } from '../auth/decorators/current-user.decorator';
 import { User } from '../auth/schema/user.schema';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
+import { Roles } from 'src/auth/decorators/roles.decorator';
 
 @Controller('restaurants')
 export class RestaurantsController {
@@ -24,7 +26,8 @@ export class RestaurantsController {
     }
 
     @Post()
-    @UseGuards(AuthGuard())
+    @UseGuards(AuthGuard(), RolesGuard)
+    @Roles('admin, user')
     async addRestaurant(
         @Body() restaurant: CreateRestaurantDTO,
         @CurrentUser() user: User
@@ -40,25 +43,34 @@ export class RestaurantsController {
     }
 
     @Put(':id')
+    @UseGuards(AuthGuard())
     async updateRestaurant(
         @Param('id') id: string,
         @Body() restaurant: UpdateRestaurantDTO,
+        @CurrentUser() user: User
     ): Promise<Restaurant> {
         //check if exists before update
-        this.restaurantsService.findById(id);
-
+        const res = await this.restaurantsService.findById(id);
+        if (res.user.toString() !== user._id.toString()) {
+            throw new Error('You are not authorized to update this restaurant');
+        }
         return this.restaurantsService.updateById(id, restaurant);
     }
 
     @Delete(':id')
+    @UseGuards(AuthGuard())
     async deleteRestaurant(
-        @Param('id') id: string
+        @Param('id') id: string,
+        @CurrentUser() user: User
     ): Promise<{ deleted: Boolean }> {
         //check if exists before update
         this.restaurantsService.findById(id);
 
-        const restaurant = this.restaurantsService.deleteById(id);
+        const restaurant = await this.restaurantsService.deleteById(id);
 
+        if (restaurant.user.toString() !== user._id.toString()) {
+            throw new Error('You are not authorized to update this restaurant');
+        }
         if (restaurant) {
             return {
                 deleted: true
