@@ -1,4 +1,6 @@
 import { Schema, Prop, SchemaFactory } from "@nestjs/mongoose";
+import mongoose from "mongoose";
+import { User } from "../../auth/schema/user.schema";
 
 export enum Category {
     FAST_FOOD = 'Fast Food',
@@ -29,6 +31,9 @@ export class Restaurant {
 
     @Prop()
     images?: object[];
+
+    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
+    user: User;
 
 };
 
