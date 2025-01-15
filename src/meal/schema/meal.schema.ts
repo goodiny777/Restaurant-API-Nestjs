@@ -23,7 +23,7 @@ export class Meal {
     @Prop()
     image: string;
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Restaurant' })
-    restaurant: Restaurant;
+    restaurant: string;
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
     user: User;
 }
