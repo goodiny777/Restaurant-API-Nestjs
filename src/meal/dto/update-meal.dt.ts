@@ -1,30 +1,31 @@
 
-import { IsString, IsNumber, IsEnum, IsNotEmpty, IsEmpty } from 'class-validator';
+import { IsString, IsNumber, IsEnum, IsNotEmpty, IsEmpty, IsOptional } from 'class-validator';
 import { Category } from '../schema/meal.schema';
 import { User } from '../../auth/schema/user.schema';
 
-//write CreateMealDto class
-export class CreateMealDto {
-    @IsNotEmpty()
+//write UpdateMealDto class
+export class UpdateMealDto {
+    @IsOptional()
     @IsString()
     readonly name: string;
 
+    @IsOptional()
     @IsString()
     readonly description: string;
 
-    @IsNotEmpty()
+    @IsOptional()
     @IsNumber()
     readonly price: number;
 
-    @IsNotEmpty()
+    @IsOptional()
     @IsEnum(Category)
     readonly category: Category;
 
-    @IsNotEmpty()
+    @IsOptional()
     @IsString()
     readonly image: string;
 
-    @IsNotEmpty()
+    @IsOptional()
     @IsString()
     readonly restaurant: string;
 
